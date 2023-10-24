@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct LandmarksApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  @StateObject private var modelData = ModelData()
+
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+        .environmentObject(modelData)
     }
+    .commands {
+      LandmarkCommands()
+    }
+#if os(macOS)
+    Settings {
+      LandmarkSettings()
+    }
+#endif
+  }
 }
